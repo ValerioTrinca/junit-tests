@@ -9,6 +9,8 @@ package main;
 
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,19 @@ import java.time.LocalDate;
 
 public class UserTest {
 
-    User user = new User("Valerio", 24, false, LocalDate.now().minusYears(24));
+    private User user;
+
+    @BeforeEach
+    public void setup() {
+        this.user = new User("Valerio", 24, false, LocalDate.now().minusYears(24));
+        System.out.println("Setup complete");
+    }
+
+     @AfterEach
+     public void cleanup() {
+        this.user = null;
+        System.out.println("Cleanup was called");
+     }
 
     @Test
     @DisplayName("User should be al least 18")
