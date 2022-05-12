@@ -7,6 +7,7 @@ package main;
  */
 
 
+import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,5 +49,13 @@ public class UserTest {
         Assertions.assertThat(user.blocked())
                 .as("User %s should not blocked", user.name())
                 .isFalse();
+    }
+
+    @Test
+    @DisplayName("Json user test")
+    public void jsonUserTest() {
+        JsonAssertions.assertThatJson(user)
+                .as("Json user test")
+                .isEqualTo("{\"name\":\"Valerio\",\"age\":24,\"blocked\":false,\"birthDate\":[1998,5,12]}");
     }
 }
