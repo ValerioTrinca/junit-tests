@@ -9,10 +9,7 @@ package main;
 
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 
@@ -20,6 +17,16 @@ import java.time.LocalDate;
 public class UserTest {
 
     private User user;
+
+    @BeforeAll
+    public static void beforeAll() {
+        System.out.println("Before all static method is called before all the tests");
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        System.out.println("After all static method is called after all the tests");
+    }
 
     @BeforeEach
     public void setup() {
