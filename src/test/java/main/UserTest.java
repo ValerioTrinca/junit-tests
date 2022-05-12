@@ -1,22 +1,22 @@
 package main;
 
-/**
- * Standart methods junit 5 - assertions
- * import org.junit.jupiter.api.Assertions;
- * import static org.junit.jupiter.api.Assertions.assertTrue;
- */
-
+// Standard methods junit 5 - assertions
+// import org.junit.jupiter.api.Assertions;
+// import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 
 
 public class UserTest {
+
+    static private final int minAge = 18;
 
     private User user;
 
@@ -54,7 +54,7 @@ public class UserTest {
 
         Assertions.assertThat(user.age())
                 .as("User %s age should be greated than 18", user.name())
-                .isGreaterThanOrEqualTo(18);
+                .isGreaterThanOrEqualTo(minAge);
 
     }
 
@@ -88,6 +88,15 @@ public class UserTest {
     public void allFriendsShouldBeAtLeast18(int ages) {
         Assertions.assertThat(ages)
                 .as("All friends should be at least 18")
-                .isGreaterThanOrEqualTo(18);
+                .isGreaterThanOrEqualTo(minAge);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/friends.csv", numLinesToSkip = 1)
+    @DisplayName("Friends.csv test")
+    public void csvFriendsFile(String name, int age) {
+        Assertions.assertThat(age)
+                .as("Friend %s should be at least %i", name, minAge)
+                .isGreaterThanOrEqualTo(minAge);
     }
 }
