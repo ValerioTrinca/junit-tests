@@ -19,7 +19,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * Tag is useful for assign a tag to every test (class or method) during the CI/CD pipeline (Jenkins, TeamCity, ecc)
+ */
+@Tag("integration")
 public class UserTest {
 
     static private final int minAge = 18;
