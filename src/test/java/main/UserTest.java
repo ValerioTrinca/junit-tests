@@ -10,8 +10,14 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.xmlunit.assertj.XmlAssert;
+import util.Resources;
+import util.Xml;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class UserTest {
@@ -98,5 +104,13 @@ public class UserTest {
         Assertions.assertThat(age)
                 .as("Friend %s should be at least %i", name, minAge)
                 .isGreaterThanOrEqualTo(minAge);
+    }
+
+    @TestFactory
+    Collection<DynamicTest> dynamicTestsCreatedThroughCode() {
+        List<Xml> xmls = Resources.toStrings("users.*\\.xml");
+        return xmls.stream().map(xml -> DynamicTest.dynamicTest(xml.name(), () -> {
+            XmlAssert.assertThat(xml.content()).hasXPath("/users/user/name");
+        })).collect(Collectors.toList());
     }
 }
