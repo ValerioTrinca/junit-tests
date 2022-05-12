@@ -10,6 +10,8 @@ package main;
 import net.javacrumbs.jsonunit.assertj.JsonAssertions;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 
@@ -78,5 +80,14 @@ public class UserTest {
         JsonAssertions.assertThatJson(user)
                 .as("Json user test")
                 .isEqualTo("{\"name\":\"Valerio\",\"age\":24,\"blocked\":false,\"birthDate\":[1998,5,12]}");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {20, 50, 80})
+    @DisplayName("All friends should be at least 18")
+    public void allFriendsShouldBeAtLeast18(int ages) {
+        Assertions.assertThat(ages)
+                .as("All friends should be at least 18")
+                .isGreaterThanOrEqualTo(18);
     }
 }
